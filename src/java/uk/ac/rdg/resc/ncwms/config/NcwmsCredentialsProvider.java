@@ -60,9 +60,12 @@ public class NcwmsCredentialsProvider implements CredentialsProvider
      */
     public void init()
     {
-        HttpClient client = ucar.nc2.util.net.HttpClientManager.init(this, null);
-        opendap.dap.DConnect2.setHttpClient(client);
-        ucar.unidata.io.http.HTTPRandomAccessFile.setHttpClient(client);
+        //HttpClient client = ucar.nc2.util.net.HttpClientManager.init(this, null);
+        //opendap.dap.DConnect2.setHttpClient(client);
+        //ucar.unidata.io.http.HTTPRandomAccessFile.setHttpClient(client);
+    	
+    	//LOOK --> what have to be done here to really update (don't think this works)
+    	ucar.nc2.util.net.HttpClientManager.init(this, null);
         logger.debug("NcwmsCredentialsProvider initialized");
     }
     
