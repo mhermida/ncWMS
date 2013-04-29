@@ -3,14 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>uk.ac.rdg.resc</groupId>
-	<artifactId>ncwms</artifactId>
-	<packaging>${packaging.type}</packaging>
-	<name>ncWMS</name>
-	<!--version>1.0.tds.4.3.20120807.1030</version -->
-	<!-- version>1.0.tds.4.3.20121211.1130</version -->
-	<version>1.0.tds.4.3.20130116.1130</version>
-	<description>
+
+  <groupId>uk.ac.rdg.resc</groupId>
+  <artifactId>ncwms</artifactId>
+  <packaging>jar</packaging>
+  <name>ncWMS</name>
+  <!--version>1.0.tds.4.3.20120807.1030</version-->
+  <!-- version>1.0.tds.4.3.20121211.1130</version-->
+  <!-- version>1.0.tds.4.3.20130116.1130</version-->
+  <version>1.0.tds.4.3.20130402.1500</version>
+  <description>
     ncWMS is an OGC Web Map Service (WMS) for geospatial data that are
     stored in CF-compliant NetCDF files.
   </description>
@@ -103,33 +105,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>edu.ucar</groupId>
-			<artifactId>netcdf</artifactId>
-			<version>4.3.17-SNAPSHOT</version>
-			<!-- exclusions>
-				<exclusion>	
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>	
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-jdk14</artifactId>
-				</exclusion>		
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-      				<groupId>org.slf4j</groupId>
-      				<artifactId>jcl-over-slf4j</artifactId>				
-				</exclusion>				
-			</exclusions -->
-		</dependency>
+
+    	<dependency>
+      		<groupId>edu.ucar</groupId>
+      		<artifactId>netcdf</artifactId>
+      		<version>4.3.17-SNAPSHOT</version>
+    	</dependency>
+
 
 		<dependency>
 			<groupId>org.khelekore</groupId>
