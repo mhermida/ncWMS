@@ -11,7 +11,8 @@
   <!--version>1.0.tds.4.3.20120807.1030</version-->
   <!-- version>1.0.tds.4.3.20121211.1130</version-->
   <!-- version>1.0.tds.4.3.20130116.1130</version-->
-  <version>1.0.tds.4.3.20130402.1500</version>
+  <!-- version>1.0.tds.4.3.20130402.1500</version-->
+  <version>1.0.tds.4.3.20130402.1500-SNAPSHOT</version>
   <description>
     ncWMS is an OGC Web Map Service (WMS) for geospatial data that are
     stored in CF-compliant NetCDF files.
@@ -37,6 +38,11 @@
       <name>Unidata 3rd-Party Repository</name>
       <url>https://artifacts.unidata.ucar.edu/content/repositories/unidata-3rdparty/</url>
     </repository>
+    <snapshotRepository>
+      <id>unidata-snapshots</id>
+      <name>UNIDATA Snapshots</name>
+      <url>https://artifacts.unidata.ucar.edu/content/repositories/unidata-snapshots/</url>
+    </snapshotRepository>    
   </distributionManagement>
   <repositories>
     <repository>
