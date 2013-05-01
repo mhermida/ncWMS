@@ -391,7 +391,7 @@ public final class CdmUtils
             //for (Date date : timeAxis.getTimeDates())
             for (CalendarDate date : timeAxis.getCalendarDates() )
             {
-                timesteps.add(new DateTime(date, DateTimeZone.UTC));
+                timesteps.add(new DateTime(date.getMillis() , DateTimeZone.UTC));
             }
             return timesteps;
         }

@@ -28,8 +28,6 @@
 
 package uk.ac.rdg.resc.ncwms.util;
 
-import uk.ac.rdg.resc.edal.util.Ranges;
-import uk.ac.rdg.resc.edal.util.Range;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,11 +40,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
 import org.geotoolkit.referencing.CRS;
 import org.joda.time.Chronology;
-import org.joda.time.Seconds;
-import org.joda.time.PeriodType;
-import org.joda.time.Duration;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
@@ -55,6 +51,7 @@ import org.joda.time.chrono.JulianChronology;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
 import uk.ac.rdg.resc.edal.cdm.CdmUtils;
 import uk.ac.rdg.resc.edal.coverage.grid.RegularGrid;
 import uk.ac.rdg.resc.edal.coverage.grid.impl.RegularGridImpl;
@@ -62,8 +59,10 @@ import uk.ac.rdg.resc.edal.geometry.BoundingBox;
 import uk.ac.rdg.resc.edal.geometry.impl.BoundingBoxImpl;
 import uk.ac.rdg.resc.edal.time.AllLeapChronology;
 import uk.ac.rdg.resc.edal.time.NoLeapChronology;
-import uk.ac.rdg.resc.ncwms.controller.GetMapDataRequest;
 import uk.ac.rdg.resc.edal.time.ThreeSixtyDayChronology;
+import uk.ac.rdg.resc.edal.util.Range;
+import uk.ac.rdg.resc.edal.util.Ranges;
+import uk.ac.rdg.resc.ncwms.controller.GetMapDataRequest;
 import uk.ac.rdg.resc.ncwms.exceptions.InvalidCrsException;
 import uk.ac.rdg.resc.ncwms.exceptions.InvalidDimensionValueException;
 import uk.ac.rdg.resc.ncwms.exceptions.WmsException;
