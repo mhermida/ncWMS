@@ -28,6 +28,8 @@
 
 package uk.ac.rdg.resc.edal.cdm;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -37,8 +39,9 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Map;
-
+import javax.imageio.ImageIO;
 import org.geotoolkit.metadata.iso.extent.DefaultGeographicBoundingBox;
+import org.geotoolkit.referencing.CRS;
 import org.geotoolkit.referencing.crs.DefaultGeographicCRS;
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
@@ -85,6 +88,7 @@ import uk.ac.rdg.resc.edal.time.NoLeapChronology;
 import uk.ac.rdg.resc.edal.time.ThreeSixtyDayChronology;
 import uk.ac.rdg.resc.edal.time.TimeUtils;
 import uk.ac.rdg.resc.edal.util.CollectionUtils;
+import uk.ac.rdg.resc.ncwms.graphics.ImageProducer;
 
 /**
  * Contains static helper methods for reading data and metadata from NetCDF files,
@@ -135,7 +139,7 @@ public final class CdmUtils
             // Create a CoverageMetadata object for each GridDatatype
             for (GridDatatype grid : gridset.getGrids())
             {
-                logger.debug("Creating new CoverageMetadata object for {}", grid.getName());
+                logger.debug("Creating new CoverageMetadata object for {}", grid.getFullName() );
                 CoverageMetadata cm = new CdmCoverageMetadata(
                     grid, temp.bbox, temp.hGrid, temp.timesteps, temp.zAxis
                 );
@@ -213,7 +217,7 @@ public final class CdmUtils
     {
         if (axis == null) throw new NullPointerException();
         //String name = axis.getName();
-        String name = axis.getFullName();
+        String name = axis.getShortName();
         // TODO: generate coordinate system axes if appropriate
         if (axis.isRegular())
         {
@@ -389,9 +393,9 @@ public final class CdmUtils
             List<DateTime> timesteps = new ArrayList<DateTime>();
             // Use the Java NetCDF library's built-in date parsing code
             //for (Date date : timeAxis.getTimeDates())
-            for (CalendarDate date : timeAxis.getCalendarDates() )
+            for (CalendarDate date : timeAxis.getCalendarDates()  )
             {
-                timesteps.add(new DateTime(date.getMillis() , DateTimeZone.UTC));
+                timesteps.add(new DateTime(date.getMillis(), DateTimeZone.UTC));
             }
             return timesteps;
         }
@@ -612,7 +616,7 @@ public final class CdmUtils
         long start = System.nanoTime();
         PixelMap pixelMap = new PixelMap(sourceGrid, targetDomain);
         long finish = System.nanoTime();
-        logger.debug("Pixel map created in {} ms", (finish - start) / 1.e6);
+        System.out.printf("Pixel map created in %f ms%n", (finish - start) / 1.e6);
         
         if (pixelMap.isEmpty())
         {
@@ -794,8 +798,7 @@ public final class CdmUtils
             Attribute longNameAtt = var.findAttributeIgnoreCase("long_name");
             if (longNameAtt == null || longNameAtt.getStringValue().trim().equals(""))
             {
-                //return var.getName();
-            	return var.getFullName();
+                return var.getFullName();
             }
             else
             {
@@ -806,6 +809,43 @@ public final class CdmUtils
         {
             return stdNameAtt.getStringValue();
         }
+    }
+    
+    public static void main(String[] args) throws Exception
+    {
+        NetcdfDataset nc = NetcdfDataset.openDataset("C:\\Godiva2_data\\Nancy DeLosa\\20120930_v_195359_l_0000000.nc");
+        GridDataset gds = getGridDataset(nc);
+        Collection<CoverageMetadata> cms = readCoverageMetadata(gds);
+        for (CoverageMetadata cm : cms) {
+            System.out.printf("%s (%s)%n", cm.getTitle(), cm.getId());
+        }
+        
+        int width = 512;
+        int height = 256;
+        
+        HorizontalGrid targetGrid = new RegularGridImpl(DefaultGeographicBoundingBox.WORLD, width, height);
+        HorizontalGrid easeGrid = new RegularGridImpl(-2560000, -1760000, 2560000, 1760000,
+                CRS.decode("EPSG:53408"), width, height);
+        HorizontalGrid npsGrid = new RegularGridImpl(-10700000, -10700000, 14700000, 14700000,
+                CRS.decode("EPSG:32661"), width, height);
+        
+        
+        long start = System.nanoTime();
+        List<Float> data = readHorizontalPoints(nc, "RemappedSatellite", 0, 0, npsGrid);
+        long finish = System.nanoTime();
+        System.out.printf("Read data in %f milliseconds%n", (finish - start) / 1e6);
+        
+        ImageProducer im = new ImageProducer.Builder()
+            .width(width)
+            .height(height)
+            .build();
+        
+        im.addFrame(data, null);
+        BufferedImage bim = im.getRenderedFrames().get(0);
+        ImageIO.write(bim, "png", new File("C:\\Users\\Jon\\Desktop\\sat.png"));
+        
+        nc.close();
+    
     }
 
 }
