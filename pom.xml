@@ -6,7 +6,7 @@
 
   <groupId>uk.ac.rdg.resc</groupId>
   <artifactId>ncwms</artifactId>
-  <!-- packaging>${packaging.type}</packaging-->
+  <packaging>${packaging.type}</packaging>
   <!-- packaging>jar</packaging-->
   <name>ncWMS</name>
   <!--version>1.0.tds.4.3.20120807.1030</version-->
@@ -352,6 +352,17 @@
 							<Built-On>${maven.build.timestamp}</Built-On>
 						</manifestEntries>
 					</archive>
+          			<webResources>
+            			<resource>
+              				<targetPath>WEB-INF/classes/uk/ac/rdg/resc/ncwms/usagelog/h2</targetPath>
+              				<filtering>false</filtering>
+              				<directory>${basedir}/src/java/uk/ac/rdg/resc/ncwms/usagelog/h2</directory>
+              				<includes>
+                				<include>init.sql</include>
+              				</includes>
+            			</resource>
+            		</webResources>						
+					
 				</configuration>
 			</plugin>
 			<plugin>
